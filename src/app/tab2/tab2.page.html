@@ -1,9 +1,46 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Two
+      Settings
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>It's like life: you don't get anything for nothing.</ion-card-subtitle>
+      <ion-card-title>Your Gross Salery</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item>
+        <ion-label position="floating">Annual Salery</ion-label>
+        <ion-input [(ngModel)]="annualWage" 
+        clearInput="true"
+        clearOnEdit="true"
+        type="text"
+        autocomplete="on"
+        autofocus="true"
+        required="true"
+        (keyup.enter)="computeAnnualWage()"
+        >
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label position="floating">Currency</ion-label>
+          <ion-select multiple="true" cancelText="Nah" okText="Okay!">
+              <ion-select-option value="CHF" selected>CHF (best ever)</ion-select-option>
+              <!---
+              <ion-select-option value="EUR">EUR (most intervened ever)</ion-select-option>
+              <ion-select-option value="SEK">SEK (sexy but weak)</ion-select-option>
+              <ion-select-option value="USD">USD (federal debt relief instrument)</ion-select-option>
+
+              --->
+            </ion-select>         
+        </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

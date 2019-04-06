@@ -1,20 +1,80 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab One
+      Rattling your Coins
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
     <ion-card class="welcome-card">
-      <ion-img src="/assets/shapes.svg"></ion-img>
+      <!--<ion-img src="/assets/shapes.svg"></ion-img>-->
       <ion-card-header>
-        <ion-card-subtitle>Get Started</ion-card-subtitle>
-        <ion-card-title>your earnings</ion-card-title>
+        <ion-card-subtitle>Life is good! You're making some coins.</ion-card-subtitle>
+        <ion-card-title>Current Earnings in {{currency}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>CHF <h1></h1></p>
+        <p ngClass="earnings">  </p>
+
+        <ion-list>
+          <!---
+          <ion-item>
+              <ion-label>
+                On-the-fly
+              </ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+        -->
+          <ion-item>
+              <ion-label>
+                Since AppStart {{current | number : '1.2-2' }}
+              </ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+          <ion-item>
+              <ion-label>
+                Today {{today | number : '1.2-2' }}
+              </ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+          <!---<ion-item>
+              <ion-label>
+                This week
+              </ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+          <ion-item>
+              <ion-label>
+                This month
+              </ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+          --->
+      </ion-list>
+
       </ion-card-content>
-    </ion-card>    
+    </ion-card>
+
+    <!---
+    <ion-card class="welcome-card">
+        <ion-card-header>
+          <ion-card-subtitle>Statistics are essential. Here some details.</ion-card-subtitle>
+          <ion-card-title>Statistics & Forecasts</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <h1>Income</h1>
+          <p>Annual </p>
+          <p>Monthly  </p>
+          <p>Weekly  </p>
+          <p>Daily  </p>
+          <p>Hourly  </p>
+          <p>Minutly (you know what I mean)  </p>
+          <p>Secondly (you ...)  </p>
+          <h1>Taxes</h1>
+          <p>In you country you are working till [..] for the goernment to subsidize other people. Good for you, if you are a social guy.</p>
+        </ion-card-content>
+      </ion-card>
+    --->
+
 </ion-content>
