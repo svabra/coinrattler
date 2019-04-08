@@ -14,6 +14,7 @@ export class Tab1Page implements OnInit {
 
   workingHourStart = '08:00';
   workingHourEnd = '17:00';
+  appStart = new Date();
 
   annualWage: number;
 
@@ -49,17 +50,16 @@ export class Tab1Page implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'No salary given',
-      subHeader: 'It\'s like life: you ain\'t get shit for free',
+      subHeader: 'It\'s like life: you ain\'t get anything for free',
 // tslint:disable-next-line: max-line-length
-      message: 'For this app to make sense, you must provide a salery. If you don\'t trust, play with a fake salery. We do not and will not ever store personal data.',
-      buttons: ['I\'m not stupid and understand.']
+      message: 'For this app to make sense, you must provide a salery. If you don\'t trust us, play with a fake salery. We do not and will not ever store personal data.',
+      buttons: ['I\'m smart and understand.']
     });
 
     await alert.present();
   }
 
   calc() {
-
     this.perDay = this.annualWage / 220;
     this.perHour = this.perDay / 8;
     this.perSecond = this.perHour / 3600;
@@ -77,6 +77,11 @@ export class Tab1Page implements OnInit {
     const hideFooterTimeout = setTimeout( () => {
       this.calc();
     },  TIME_IN_MS);
+  }
+
+  resetAppStart() {
+    this.appStart = new Date();
+    this.current = 0;
   }
 
 

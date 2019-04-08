@@ -18,23 +18,18 @@
         <p ngClass="earnings">  </p>
 
         <ion-list>
-          <!---
-          <ion-item>
-              <ion-label>
-                On-the-fly
-              </ion-label>
-              <ion-reorder slot="end"></ion-reorder>
-          </ion-item>
-        -->
           <ion-item>
               <ion-label>
                 Since AppStart {{current | number : '1.2-2' }}
+                <div>since {{this.appStart | date : 'hh:mm:ss'}}</div>
               </ion-label>
+              <ion-icon slot="end" color="medium" name="refresh" (click)="resetAppStart()"></ion-icon>
               <ion-reorder slot="end"></ion-reorder>
           </ion-item>
           <ion-item>
               <ion-label>
                 Today {{today | number : '1.2-2' }}
+                <div>since 08:00</div>
               </ion-label>
               <ion-reorder slot="end"></ion-reorder>
           </ion-item>
@@ -57,24 +52,7 @@
     </ion-card>
 
     <!---
-    <ion-card class="welcome-card">
-        <ion-card-header>
-          <ion-card-subtitle>Statistics are essential. Here some details.</ion-card-subtitle>
-          <ion-card-title>Statistics & Forecasts</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <h1>Income</h1>
-          <p>Annual </p>
-          <p>Monthly  </p>
-          <p>Weekly  </p>
-          <p>Daily  </p>
-          <p>Hourly  </p>
-          <p>Minutly (you know what I mean)  </p>
-          <p>Secondly (you ...)  </p>
-          <h1>Taxes</h1>
-          <p>In you country you are working till [..] for the goernment to subsidize other people. Good for you, if you are a social guy.</p>
-        </ion-card-content>
-      </ion-card>
+    
     --->
 
 </ion-content>
