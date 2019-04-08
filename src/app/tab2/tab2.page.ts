@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit{
+  // TODO: must hook anobserver to annualWage
   annualWage: number;
 
   constructor(private storage: Storage){}
@@ -28,15 +29,30 @@ export class Tab2Page implements OnInit{
     });
   }
 
-  computeAnnualWage() {
+  computeAnnualWage(evt) {
     this.storage.set('annualWage', this.annualWage);
     console.log('annual wage stored: ' + this.annualWage);
+    console.log(evt);
+    evt.target.blur();
   }
 
-  // Or to get a key/value pair
-  
+  doBlur($event) {
+    console.log($event);
+    $event.target.blur();
+  }
 
-  // function sendData(data) {
-  //   events.publish('data:created', data);
-  // }
+  /**
+   * Allow only numbers to be inserted
+   * @param evt 
+   */
+  validateOnlyNumbers(evt) {
+    const theEvent = evt || window.event;
+    let key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode( key );
+    const regex = /[0-9]|\./;
+    if(!regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
 }

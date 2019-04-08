@@ -18,9 +18,13 @@ export class Tab1Page implements OnInit {
 
   annualWage: number;
 
+  isLeisureTime: boolean;
+
   current = 0;
   today: number;
 
+  perMonth: number;
+  perWeek: number;
   perDay: number;
   perHour: number;
   perMinute: number;
@@ -35,11 +39,14 @@ export class Tab1Page implements OnInit {
   ionViewDidEnter() {
     this.storage.get('annualWage').then((wage) => {
       const _wage = parseFloat(wage);
-      console.log('your annual wage', _wage);
+      console.log('get latest annual wage', _wage);
       if (typeof _wage === 'number' && !isNaN(_wage) ) {
         console.log('Valid wage available: ' + _wage);
         this.annualWage = _wage;
-        this.calc();
+        // If wage-relevant settings changed, you must reset the current.
+
+        this.calcLiveEarnings();
+        this.calcStatistics();
       } else {
         this.presentAlert();
         this.route.navigateByUrl('/tabs/tab2');
@@ -59,24 +66,40 @@ export class Tab1Page implements OnInit {
     await alert.present();
   }
 
-  calc() {
-    this.perDay = this.annualWage / 220;
-    this.perHour = this.perDay / 8;
-    this.perSecond = this.perHour / 3600;
-    this.current += this.perSecond;
-    this.current = this.current + this.perSecond;
+  calcLiveEarnings() {
+    this.perSecond = (this.annualWage / 220) / 8 / 3600;
+    
+    // this.current = this.current + this.perSecond;
 
     // today calculations
     const now = new Date();
+    // start of the working hours
     const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0);
-    const workingSeconds = (now.getTime() - start.getTime()) / 1000;
+    const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 0, 0, 0);
+    if(now < endTime) {
+      this.isLeisureTime = false;
+      // compute the "current" value
+      this.current += this.perSecond;
+      // continue with the "Today" value
+      const workingSeconds = (now.getTime() - start.getTime()) / 1000;
+      this.today = workingSeconds * this.perSecond;
+      const TIME_IN_MS = 1000;
+      const hideFooterTimeout = setTimeout( () => {
+        this.calcLiveEarnings();
+      },  TIME_IN_MS);
+    } else {
+      this.isLeisureTime = true;
+      console.log('It\'s passed 17:00. No one is working anymore.');
+    }
+  }
 
-    this.today = workingSeconds * this.perSecond;
-
-    const TIME_IN_MS = 1000;
-    const hideFooterTimeout = setTimeout( () => {
-      this.calc();
-    },  TIME_IN_MS);
+  calcStatistics() {
+    this.perMonth = this.annualWage / 12;
+    this.perWeek = this.annualWage / 52;
+    this.perDay = this.annualWage / 220;
+    this.perHour = this.perDay / 8;
+    this.perMinute = this.perHour / 60;
+    this.perSecond = this.perMinute / 60;
   }
 
   resetAppStart() {

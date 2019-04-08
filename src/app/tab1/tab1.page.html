@@ -11,48 +11,94 @@
     <ion-card class="welcome-card">
       <!--<ion-img src="/assets/shapes.svg"></ion-img>-->
       <ion-card-header>
-        <ion-card-subtitle>Life is good! You're making some coins.</ion-card-subtitle>
-        <ion-card-title>Current Earnings in {{currency}}</ion-card-title>
+        <ion-card-subtitle>
+
+            <ng-template [ngIf]="isLeisureTime" [ngIfElse]="workingHours">
+              Regular workings hours are from eight to five. I suggest you stop being greedy for today.
+              If you cannot, there are statistics about your hercules-salary further down the page. Provided that you supplied your annual salary. 
+              Otherwise Live-Earnings will compute again tomorrow.
+            </ng-template>
+            <ng-template #workingHours>
+              Life is good! You're making some coins.
+            </ng-template>          
+        
+        </ion-card-subtitle>
+        <ion-card-title>Live-Earnings</ion-card-title>
       </ion-card-header>
-      <ion-card-content>
-        <p ngClass="earnings">  </p>
-
-        <ion-list>
-          <ion-item>
-              <ion-label>
-                Since AppStart {{current | number : '1.2-2' }}
-                <div>since {{this.appStart | date : 'HH:mm:ss'}}</div>
-              </ion-label>
-              <ion-icon slot="end" color="medium" name="refresh" (click)="resetAppStart()"></ion-icon>
-              <ion-reorder slot="end"></ion-reorder>
-          </ion-item>
-          <ion-item>
-              <ion-label>
-                Today {{today | number : '1.2-2' }}
-                <div>since 08:00</div>
-              </ion-label>
-              <ion-reorder slot="end"></ion-reorder>
-          </ion-item>
-          <!---<ion-item>
-              <ion-label>
-                This week
-              </ion-label>
-              <ion-reorder slot="end"></ion-reorder>
-          </ion-item>
-          <ion-item>
-              <ion-label>
-                This month
-              </ion-label>
-              <ion-reorder slot="end"></ion-reorder>
-          </ion-item>
-          --->
-      </ion-list>
-
+      <ion-card-content>        
+          <ion-list>
+              <ion-item>
+                  <ion-label>
+                   
+                    <div>since {{this.appStart | date : 'HH:mm:ss'}}</div>
+                  </ion-label>
+                  <ion-button (click)="resetAppStart()" color="light">
+                      <ion-icon slot="icon-only" name="refresh"></ion-icon>
+                  </ion-button>
+                  
+                  <ion-reorder slot="end"></ion-reorder>
+              </ion-item>
+              <ion-item>
+                  <ion-label>
+                    Today {{today | number : '1.2-2' }}
+                    <div>since 08:00</div>
+                  </ion-label>
+                  <ion-reorder slot="end"></ion-reorder>
+              </ion-item>                
+          </ion-list>
       </ion-card-content>
     </ion-card>
 
-    <!---
-    
-    --->
+    <ion-card class="welcome-card">
+        <ion-card-header>
+          <ion-card-subtitle>Because statistics matter. </ion-card-subtitle>
+          <ion-card-title>Statistics</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-list>
+                <ion-item>
+                    <ion-label>
+                      Annual Salary {{this.annualWage | currency : 'CHF'}}                
+                    </ion-label>                          
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                      Monthly Salary {{this.perMonth | currency : 'CHF'}}
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                      Weekly Salary {{this.perWeek | currency : 'CHF'}}
+                      
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                      Daily Salary {{this.perDay | currency : 'CHF'}}
+                      <div>computed by 220 working days</div>
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                      Hourly Salary {{this.perHour | currency : 'CHF'}}
+                      <div>computed by 8h a day</div>
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                      Salary by a Minute {{this.perMinute | currency : 'CHF'}}
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                      Salary by a Second {{this.perSecond | currency : 'CHF'}}
+                    </ion-label>
+                </ion-item>
+                
+            </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+   
 
 </ion-content>

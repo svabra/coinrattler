@@ -10,20 +10,24 @@
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>It's like life: you don't get anything for nothing.</ion-card-subtitle>
-      <ion-card-title>Your Gross Salery</ion-card-title>
+      <ion-card-title>Your Gross Salary</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       
       <ion-item>
-        <ion-label position="floating">Annual Salery</ion-label>
-        <ion-input [(ngModel)]="annualWage" 
-        clearInput="true"
-        clearOnEdit="true"
-        type="number"
-        autocomplete="on"
+        <ion-label position="floating">Annual Salary</ion-label>
+        <ion-input 
+        [ngModel]="annualWage"  
+        (ngModelChange)="annualWage=$event"
+        clearInput="true"        
+        type="text"
+        inputmode="numeric"
         autofocus="true"
+        autocomplete="on"
         required="true"
-        (keyup.enter)="computeAnnualWage()"
+        (keyup.enter)="computeAnnualWage($event)"
+        (keypress)="validateOnlyNumbers(this)"
+        ng-enter="doBlur($event)"
         >
         </ion-input>
       </ion-item>

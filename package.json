@@ -1,8 +1,8 @@
 {
-  "name": "CoinRattler",
+  "name": "coinrattler",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Brayan Svan",
+  "homepage": "https://www.brayan.com/coinrattler",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -58,5 +58,5 @@
     "tslint": "~5.12.0",
     "typescript": "~3.1.6"
   },
-  "description": "An Ionic project"
+  "description": "a coin rattling projects for the greedy consultants"
 }
