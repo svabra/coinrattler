@@ -21,7 +21,7 @@
           <ion-item>
               <ion-label>
                 Since AppStart {{current | number : '1.2-2' }}
-                <div>since {{this.appStart | date : 'hh:mm:ss'}}</div>
+                <div>since {{this.appStart | date : 'HH:mm:ss'}}</div>
               </ion-label>
               <ion-icon slot="end" color="medium" name="refresh" (click)="resetAppStart()"></ion-icon>
               <ion-reorder slot="end"></ion-reorder>
