@@ -76,7 +76,7 @@ export class Tab1Page implements OnInit {
     // start of the working hours
     const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0);
     const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 0, 0, 0);
-    if(now < endTime) {
+    if(now >= start && now < endTime) {
       this.isLeisureTime = false;
       // compute the "current" value
       this.current += this.perSecond;

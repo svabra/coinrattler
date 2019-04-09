@@ -2,7 +2,7 @@
   "name": "coinrattler",
   "version": "0.0.1",
   "author": "Brayan Svan",
-  "homepage": "https://www.brayan.com/coinrattler",
+  "homepage": "https://www.brayan.com/coinrattler/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
