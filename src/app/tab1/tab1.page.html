@@ -27,6 +27,7 @@
                 <ion-list>
                     <ion-item>
                         <ion-label>
+                          {{current | number : '1.2-2'}}
                           <div>since {{this.appStart | date : 'HH:mm:ss'}}</div>
                         </ion-label>
                         <ion-button (click)="resetAppStart()" color="light">
