@@ -7,9 +7,8 @@ Feature Planning
   - Remove the NaN or make it all selected when clicked on initial application use.
   
 0.3.0
-  - Illustrate how bad the consultants should feel using a gauge graph.
-  
-0.4.0
   - Show box-plot with provided (Swiss) salaries (display outliers).
   - Show the average and median of salaries given by users (filter outliers).
-
+  
+0.4.0
+  - Illustrate how bad the consultants should feel using a gauge graph :-). Employ the statistical observations to determ a pseudo-rational visual statement.
