@@ -3,7 +3,7 @@
 Feature Planning
 
 0.2.5
-  - Fix annual salary input button for iPhones.
+  - Issue#1: Fix annual salary input button for iPhones.
   - Remove the NaN or make it all selected when clicked on initial application use.
   
 0.3.0
