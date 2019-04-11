@@ -1,4 +1,4 @@
-# coinrattler
+# Coin Rattler
 
 Feature Planning
 
