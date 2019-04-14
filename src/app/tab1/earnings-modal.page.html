@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Live-Earnings</ion-title>
+    <ion-button slot="end" color="light" (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card-content>
+        
+        <div class="live-earnings">
+            {{current | number : '1.2-2'}} 
+            <ion-button (click)="resetStartTime()" color="light">
+                <ion-icon slot="icon-only" name="refresh"></ion-icon>
+            </ion-button> 
+            <p>since {{this.startTime | date : 'HH:mm:ss'}}</p>
+          </div>
+
+          <div class="live-earnings">
+            {{today | number : '1.2-2'}}
+            <p>Today since 08:00</p>
+          </div>
+
+    </ion-card-content>
+</ion-content>
+
+<ion-footer>
+  <img src="assets/imgs/moneyAnimated.gif" alt="Live-Earnings counting big" width="100%">
+</ion-footer>

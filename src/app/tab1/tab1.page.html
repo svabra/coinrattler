@@ -18,14 +18,14 @@
       </ion-card-header>
       <ion-card-content> 
         
-          <ng-template [ngIf]="isLeisureTime" [ngIfElse]="workingHours">
+          <ng-template [ngIf]="!isOfficeHours" [ngIfElse]="workingHours">
               Regular workings hours are from eight to five. I suggest you stop being greedy for today.
               If you cannot, there are statistics about your hercules-salary further down the page. Provided that you supplied your annual salary. 
               Otherwise Live-Earnings will compute again at 08:00 in the morning.
             </ng-template>
             <ng-template #workingHours>
                 <ion-list>
-                    <ion-item>
+                    <ion-item (click)=presentEarningsModal() [className]="'selectable'">
                         <ion-label>
                           {{current | number : '1.2-2'}}
                           <div>since {{this.appStart | date : 'HH:mm:ss'}}</div>
@@ -37,8 +37,8 @@
                     </ion-item>
                     <ion-item>
                         <ion-label>
-                          Today {{today | number : '1.2-2' }}
-                          <div>since 08:00</div>
+                          {{today | number : '1.2-2' }}
+                          <div>Today since 08:00</div>
                         </ion-label>
                         <ion-reorder slot="end"></ion-reorder>
                     </ion-item>                

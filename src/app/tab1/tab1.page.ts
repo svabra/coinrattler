@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Events, AlertController } from '@ionic/angular';
+import { NavController, Events, AlertController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { isNumber } from 'util';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EarningsModalPage} from './earnings-modal.page';
+import { WageCalcService} from '../services/wage-calc.service';
 
 @Component({
   selector: 'app-tab1',
@@ -10,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
+  isDev = true;
   currency = 'CHF';
 
   workingHourStart = '08:00';
@@ -17,8 +20,6 @@ export class Tab1Page implements OnInit {
   appStart = new Date();
 
   annualWage: number;
-
-  isLeisureTime: boolean;
 
   current = 0;
   today: number;
@@ -30,7 +31,12 @@ export class Tab1Page implements OnInit {
   perMinute: number;
   perSecond: number;
 
-  constructor(public events: Events, private storage: Storage, public route: Router, public alertController: AlertController) {
+  constructor(public events: Events, 
+    private storage: Storage, 
+    public route: Router, 
+    public alertController: AlertController, 
+    public modalController: ModalController,
+    private wageCalcService: WageCalcService) {
   }
 
   ngOnInit() {
@@ -62,25 +68,28 @@ export class Tab1Page implements OnInit {
       message: 'For this app to make sense, you must provide a salery. If you don\'t trust us, play with a fake salery. We do not and will not ever store personal data.',
       buttons: ['I\'m smart and understand.']
     });
-
     await alert.present();
+  }
+
+  async presentEarningsModal() {
+    const modal = await this.modalController.create({
+      component: EarningsModalPage,
+      componentProps: { contStartTime: this.appStart },
+      animated: true,
+      showBackdrop: true
+    });
+    return await modal.present();
   }
 
   calcLiveEarnings() {
     this.perSecond = (this.annualWage / 220) / 8 / 3600;
-    
-    // this.current = this.current + this.perSecond;
-
     // today calculations
-    const now = new Date();
-    // start of the working hours
-    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0);
-    const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 0, 0, 0);
-    if(now >= start && now < endTime) {
-      this.isLeisureTime = false;
+    if(this.isOfficeHours()) {
       // compute the "current" value
       this.current += this.perSecond;
       // continue with the "Today" value
+      const now = new Date();
+      const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0);
       const workingSeconds = (now.getTime() - start.getTime()) / 1000;
       this.today = workingSeconds * this.perSecond;
       const TIME_IN_MS = 1000;
@@ -88,7 +97,6 @@ export class Tab1Page implements OnInit {
         this.calcLiveEarnings();
       },  TIME_IN_MS);
     } else {
-      this.isLeisureTime = true;
       console.log('It\'s passed 17:00. No one is working anymore.');
     }
   }
@@ -102,11 +110,23 @@ export class Tab1Page implements OnInit {
     this.perSecond = this.perMinute / 60;
   }
 
+  isOfficeHours () {
+    const now = new Date();
+    // start of the working hours
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0);
+    const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 0, 0, 0);
+
+    if (now >= start && now < endTime){
+      return true;
+    } else {
+      // return true;
+      // for DEV purpose only
+      return true;
+    }
+  }
+
   resetAppStart() {
     this.appStart = new Date();
     this.current = 0;
   }
-
-
-
 }
