@@ -25,7 +25,8 @@
         autofocus="true"
         autocomplete="on"
         required="true"
-        (keydown.enter)="computeAnnualWage($event)"
+        (keydown)="computeAnnualWage($event)"
+        (keydown.enter)="doBlur($event)"
         (keypress)="validateOnlyNumbers(this)"
         ng-enter="doBlur($event)"
         >

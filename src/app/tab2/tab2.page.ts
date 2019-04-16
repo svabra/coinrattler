@@ -33,7 +33,7 @@ export class Tab2Page implements OnInit{
     this.storage.set('annualWage', this.annualWage);
     console.log('annual wage stored: ' + this.annualWage);
     console.log(evt);
-    evt.target.blur();
+    //evt.target.blur();
   }
 
   doBlur($event) {
