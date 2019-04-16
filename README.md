@@ -14,6 +14,9 @@ Feature Planning
 
 0.2.6
   - Remove the NaN or make it all selected when clicked on initial application use.
+  - Allow the Daily working hours to be set. e.g. 8.24. Keep the default to 8h.
+  - Allow approximate working days per year being set. Keep the default to 220d.
+  - Prepend the CHF in front of the numbers.
   
 0.3.0
   - Show box-plot with provided (Swiss) salaries (display outliers).
