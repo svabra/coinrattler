@@ -4,6 +4,7 @@ Feature Planning
 
 0.2.5
   - Issue#1: Fix annual salary input button for iPhones.
+  - Issue#2: Fix the refresh button to avoid the new window to pop up.
   - Remove the NaN or make it all selected when clicked on initial application use.
   
 0.3.0
