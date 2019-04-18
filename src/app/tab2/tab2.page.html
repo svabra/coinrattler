@@ -25,7 +25,7 @@
         autofocus="true"
         autocomplete="on"
         required="true"
-        (keydown)="computeAnnualWage($event)"
+        (keydown)="saveAnnualWage($event)"
         (keydown.enter)="doBlur($event)"
         (keypress)="validateOnlyNumbers(this)"
         ng-enter="doBlur($event)"
@@ -44,6 +44,24 @@
 
               --->
             </ion-select>         
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Working Hours per Day</ion-label>
+            <ion-input 
+            [ngModel]="hoursPerDay"  
+            (ngModelChange)="hoursPerDay=$event"
+            clearInput="true"        
+            type="text"
+            inputmode="numeric"
+            autocomplete="on"
+            required="true"
+            (keydown)="saveHoursPerDay($event)"
+            (keydown.enter)="doBlur($event)"
+            (keypress)="validateOnlyNumbers(this)"
+            ng-enter="doBlur($event)"
+            >
+            </ion-input>
         </ion-item>
 
     </ion-card-content>

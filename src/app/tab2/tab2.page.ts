@@ -9,7 +9,9 @@ import { Storage } from '@ionic/storage';
 })
 export class Tab2Page implements OnInit{
   // TODO: must hook anobserver to annualWage
-  annualWage: number;
+  // default values
+  annualWage= 100000;
+  hoursPerDay = 8.3;
 
   constructor(private storage: Storage){}
 
@@ -19,21 +21,32 @@ export class Tab2Page implements OnInit{
   ionViewDidEnter() {
     this.storage.get('annualWage').then((wage) => {
       const _wage = parseFloat(wage);
-      console.log('your annual wage', _wage);
-      if (typeof _wage === 'number') {
+      if (!isNaN(_wage)) {
         this.annualWage = _wage;
-        console.log('update annual wage field');
-      } else{
+      } else {
         console.log('FAIL: not a number' + this.annualWage);
+      }
+    });
+
+    // hours per day
+    this.storage.get('hoursPerDay').then((hoursPerDay) => {
+      const _hoursPerDay = parseFloat(hoursPerDay);
+      if (!isNaN(_hoursPerDay)) {
+        this.hoursPerDay = _hoursPerDay;
+      } else {
+        console.log('FAIL: not a number' + this.hoursPerDay);
       }
     });
   }
 
-  computeAnnualWage(evt) {
+  saveAnnualWage(evt) {
     this.storage.set('annualWage', this.annualWage);
     console.log('annual wage stored: ' + this.annualWage);
-    console.log(evt);
-    //evt.target.blur();
+  }
+
+  saveHoursPerDay(evt) {
+    this.storage.set('hoursPerDay', this.hoursPerDay);
+    console.log('hoursPerDay saved: ' + this.hoursPerDay);
   }
 
   doBlur($event) {

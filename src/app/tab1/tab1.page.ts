@@ -20,6 +20,7 @@ export class Tab1Page implements OnInit {
   appStart = new Date();
 
   annualWage: number;
+  hoursPerDay: number;
 
   current = 0;
   today: number;
@@ -41,21 +42,19 @@ export class Tab1Page implements OnInit {
   ngOnInit() {}
 
   ionViewDidEnter() {
-    this.storage.get('annualWage').then((wage) => {
-      const _wage = parseFloat(wage);
-      console.log('get latest annual wage', _wage);
-      if (typeof _wage === 'number' && !isNaN(_wage)) {
-        console.log('Valid wage available: ' + _wage);
-        this.annualWage = _wage;
-        // If wage-relevant settings changed, you must reset the current.
+    // get the hours first.
+    this.hoursPerDay = this.wageCalcService.getHoursPerDay();
+    const _wage = this.wageCalcService.getWage();
 
-        this.calcLiveEarnings();
-        this.calcStatistics();
-      } else {
-        this.presentAlert();
-        this.route.navigateByUrl('/tabs/tab2');
-      }
-    });
+    if (!isNaN(_wage)) {
+      this.annualWage = _wage;
+      // If wage-relevant settings changed, you must reset the current.
+      this.calcLiveEarnings();
+      this.calcStatistics();
+    } else {
+      this.presentAlert();
+      this.route.navigateByUrl('/tabs/tab2');
+    }
   }
 
   async presentAlert() {
@@ -105,7 +104,7 @@ export class Tab1Page implements OnInit {
     this.perMonth = this.annualWage / 12;
     this.perWeek = this.annualWage / 52;
     this.perDay = this.annualWage / 220;
-    this.perHour = this.perDay / 8;
+    this.perHour = this.perDay / this.hoursPerDay;
     this.perMinute = this.perHour / 60;
     this.perSecond = this.perMinute / 60;
   }

@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 })
 export class WageCalcService {
   annualWage = 0;
+  hoursPerDay = 0;
 
   current = 0;
   today: number;
@@ -21,13 +22,14 @@ export class WageCalcService {
 
   ngOnInit() {
     this.getWage();
+    this.getHoursPerDay();
   }
 
   calcStatistics() {
     this.perMonth = this.annualWage / 12;
     this.perWeek = this.annualWage / 52;
     this.perDay = this.annualWage / 220;
-    this.perHour = this.perDay / 8;
+    this.perHour = this.perDay / this.hoursPerDay;
     this.perMinute = this.perHour / 60;
     this.perSecond = this.perMinute / 60;
   }
@@ -81,12 +83,22 @@ export class WageCalcService {
     }
   }
 
-  getWage(){
+  public getWage(){
     this.storage.get('annualWage').then((wage) => {
       this.annualWage = parseFloat(wage);   
       console.log('WageCalcService: wage=' + wage);   
     });
     return this.annualWage;
+  }
+
+  public getHoursPerDay(){
+    this.storage.get('hoursPerDay').then((hoursPerDay) => {
+      const _hoursPerDay = parseFloat(hoursPerDay);
+      if (!isNaN(_hoursPerDay)) {
+        this.hoursPerDay = _hoursPerDay;
+      }
+    });
+    return this.hoursPerDay;
   }
 
 }
