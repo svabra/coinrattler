@@ -9,12 +9,12 @@ Feature Planning
 0.2.5
   - Issue#1: Fix annual salary input button for iPhones. "Done" does not work, because it's no keyboard key. Unequal to "Enter".
   - Issue#2: Fix the refresh button to avoid the new window to pop up.
-  
--------CURRENT VERSION--------
 
 0.2.6
   - Upload SRF Video about employment of consultants.
   - Prepend the CHF in front of the numbers.
+  
+-------CURRENT VERSION--------
   
 0.2.7
   - Remove the NaN or make it all selected when clicked on initial application use.
