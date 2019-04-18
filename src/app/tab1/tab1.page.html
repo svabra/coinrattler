@@ -24,10 +24,12 @@
               Otherwise Live-Earnings will compute again at 08:00 in the morning.
             </ng-template>
             <ng-template #workingHours>
+
                 <ion-list>
                     <ion-item>
-                        <ion-label (click)=presentEarningsModal() [className]="'selectable'">
-                            {{current | number : '1.2-2'}}
+                        <ion-label (click)=presentEarningsModal() [className]="'selectable'" title="Click to focus on daily coin rattling." mat-raised-button
+                        matTooltip="Info about the action">
+                            {{currency}} {{current | number : '1.2-2'}}
                             <div>since {{this.appStart | date : 'HH:mm:ss'}}</div>
                         </ion-label>
                         <ion-button (click)="resetAppStart()" color="light">
@@ -37,7 +39,7 @@
                     </ion-item>
                     <ion-item>
                         <ion-label>
-                          {{today | number : '1.2-2' }}
+                          {{currency}} {{today | number : '1.2-2' }}
                           <div>Today since 08:00</div>
                         </ion-label>
                         <ion-reorder slot="end"></ion-reorder>
@@ -56,39 +58,39 @@
             <ion-list>
                 <ion-item>
                     <ion-label>
-                      Annual Salary {{this.annualWage | currency : 'CHF'}}                
+                      Annual Salary {{this.annualWage | number : '1.2-2' }}                
                     </ion-label>                          
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Monthly Salary {{this.perMonth | currency : 'CHF'}}
+                      Monthly Salary {{this.perMonth | number : '1.2-2' }}
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Weekly Salary {{this.perWeek | currency : 'CHF'}}                      
+                      Weekly Salary {{this.perWeek | number : '1.2-2' }}                      
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Daily Salary {{this.perDay | currency : 'CHF'}}
+                      Daily Salary {{this.perDay | number : '1.2-2' }}
                       <div>computed by 220 working days</div>
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Hourly Salary {{this.perHour | currency : 'CHF'}}
+                      Hourly Salary {{this.perHour | number : '1.2-2' }}
                       <div>computed by 8h a day</div>
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Salary by a Minute {{this.perMinute | currency : 'CHF'}}
+                      Salary by a Minute {{this.perMinute | number : '1.2-2' }}
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Salary by a Second {{this.perSecond | currency : 'CHF'}}
+                      Salary by a Second {{this.perSecond | number : '1.2-2' }}
                     </ion-label>
                 </ion-item>
                 
