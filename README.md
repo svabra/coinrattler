@@ -14,11 +14,11 @@ Feature Planning
   - Upload SRF Video about employment of consultants.
   - Prepend the CHF in front of the numbers.
   
--------CURRENT VERSION--------
-  
 0.2.7
   - Remove the NaN or make it all selected when clicked on initial application use.
   - Allow the Daily working hours to be set. e.g. 8.24. Keep the default to 8h.
+
+-------CURRENT VERSION--------
 
 0.2.8
   - Create a stop button for the focus-view of the second-counter.
