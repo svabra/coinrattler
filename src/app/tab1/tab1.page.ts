@@ -5,6 +5,8 @@ import { isNumber } from 'util';
 import { ActivatedRoute, Router} from '@angular/router';
 import { EarningsModalPage} from './earnings-modal.page';
 import { WageCalcService} from '../services/wage-calc.service';
+import { SettingsService } from '../services/settings.service';
+import { Settings } from '../models/settings';
 
 @Component({
   selector: 'app-tab1',
@@ -19,7 +21,7 @@ export class Tab1Page implements OnInit {
   workingHourEnd = '17:00';
   appStart = new Date();
 
-  annualWage: number;
+  settings: Settings;
   hoursPerDay: number;
 
   current = 0;
@@ -37,21 +39,22 @@ export class Tab1Page implements OnInit {
     public route: Router,
     public alertController: AlertController,
     public modalController: ModalController,
-    private wageCalcService: WageCalcService) {}
+    private wageCalcService: WageCalcService,
+    private settingsSerivce: SettingsService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.settings = this.settingsSerivce.getSettings();
 
-  ionViewDidEnter() {
-    // get the hours first.
-    this.hoursPerDay = this.wageCalcService.getHoursPerDay();
-    const _wage = this.wageCalcService.getWage();
-
-    if (!isNaN(_wage)) {
-      this.annualWage = _wage;
+    if (!isNaN(this.settings.annualWage)) {
+      console.log('loading settings: ' + this.settings.annualWage);
       // If wage-relevant settings changed, you must reset the current.
       this.calcLiveEarnings();
       this.calcStatistics();
-    } else {
+    }
+  }
+
+  ionViewDidEnter() {
+    if (isNaN(this.settings.annualWage)){
       this.presentAlert();
       this.route.navigateByUrl('/tabs/tab2');
     }
@@ -81,7 +84,7 @@ export class Tab1Page implements OnInit {
   }
 
   calcLiveEarnings() {
-    this.perSecond = (this.annualWage / 220) / 8 / 3600;
+    this.perSecond = (this.settings.annualWage / 220) / 8 / 3600;
     // today calculations
     if (this.isOfficeHours()) {
       // compute the "current" value
@@ -101,10 +104,10 @@ export class Tab1Page implements OnInit {
   }
 
   calcStatistics() {
-    this.perMonth = this.annualWage / 12;
-    this.perWeek = this.annualWage / 52;
-    this.perDay = this.annualWage / 220;
-    this.perHour = this.perDay / this.hoursPerDay;
+    this.perMonth = this.settings.annualWage / 12;
+    this.perWeek = this.settings.annualWage / 52;
+    this.perDay = this.settings.annualWage / 220;
+    this.perHour = this.perDay / this.settings.hoursPerDay;
     this.perMinute = this.perHour / 60;
     this.perSecond = this.perMinute / 60;
   }

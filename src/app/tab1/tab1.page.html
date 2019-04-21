@@ -20,7 +20,7 @@
         
           <ng-template [ngIf]="!isOfficeHours" [ngIfElse]="workingHours">
               Regular workings hours are from eight to five. I suggest you stop being greedy for today.
-              If you cannot, there are statistics about your hercules-salary further down the page. Provided that you supplied your annual salary. 
+              If you cannot, there are statistics about your hercules- further down the page. Provided that you supplied your annual . 
               Otherwise Live-Earnings will compute again at 08:00 in the morning.
             </ng-template>
             <ng-template #workingHours>
@@ -58,39 +58,39 @@
             <ion-list>
                 <ion-item>
                     <ion-label>
-                      Annual Salary {{this.annualWage | number : '1.2-2' }}                
+                      Annual  {{this.settings.annualWage | number : '1.2-2' }}                
                     </ion-label>                          
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Monthly Salary {{this.perMonth | number : '1.2-2' }}
+                      Monthly  {{this.perMonth | number : '1.2-2' }}
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Weekly Salary {{this.perWeek | number : '1.2-2' }}                      
+                      Weekly  {{this.perWeek | number : '1.2-2' }}                      
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Daily Salary {{this.perDay | number : '1.2-2' }}
+                      Daily  {{this.perDay | number : '1.2-2' }}
                       <div>computed by 220 working days</div>
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Hourly Salary {{this.perHour | number : '1.2-2' }}
-                      <div>computed by {{this.hoursPerDay}}h a day</div>
+                      Hourly  {{this.perHour | number : '1.2-2' }}
+                      <div>computed by {{this.settings.hoursPerDay}}h a day</div>
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Salary by a Minute {{this.perMinute | number : '1.2-2' }}
+                       by a Minute {{this.perMinute | number : '1.2-2' }}
                     </ion-label>
                 </ion-item>
                 <ion-item>
                     <ion-label>
-                      Salary by a Second {{this.perSecond | number : '1.2-2' }}
+                       by a Second {{this.perSecond | number : '1.2-2' }}
                     </ion-label>
                 </ion-item>
                 

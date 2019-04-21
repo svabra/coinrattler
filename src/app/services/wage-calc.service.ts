@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { Settings } from '../models/settings';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WageCalcService {
-  annualWage = 0;
-  hoursPerDay = 0;
-
-  current = 0;
+    current = 0;
   today: number;
 
   perMonth: number;
@@ -20,52 +18,37 @@ export class WageCalcService {
 
   constructor(private storage: Storage ) {}
 
-  ngOnInit() {
-    this.getWage();
-    this.getHoursPerDay();
-  }
 
-  calcStatistics() {
-    this.perMonth = this.annualWage / 12;
-    this.perWeek = this.annualWage / 52;
-    this.perDay = this.annualWage / 220;
-    this.perHour = this.perDay / this.hoursPerDay;
+  calcStatistics(settings: Settings) {
+    const annualWage = settings.annualWage;
+    this.perMonth = annualWage / 12;
+    this.perWeek = annualWage / 52;
+    this.perDay = annualWage / 220;
+    this.perHour = this.perDay / settings.hoursPerDay;
     this.perMinute = this.perHour / 60;
     this.perSecond = this.perMinute / 60;
   }
 
-  public calcToday (annualWage: number) {
-    if (this.annualWage == 0) {
-      this.annualWage = this.getWage();
-    }
-
-    this.perSecond = (this.annualWage / 220) / 8 / 3600;
-    // today calculations
-    // compute the "current" value
-    // this.current += this.perSecond;
+  public calcToday (settings: Settings) {
+    this.perSecond = (settings.annualWage / 220) / 8 / 3600;
+    
     // continue with the "Today" value
     const now = new Date();
     const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0);
     const workingSeconds = (now.getTime() - start.getTime()) / 1000;
     this.today = workingSeconds * this.perSecond;
-    // console.log('WageCalcService: this.annualWage= '+ this.annualWage+', this.today = ' + this.today + ', workingSeconds=' + workingSeconds);
     return this.today;
   }
 
-  public calcCurrent (annualWage: number, startTime: Date) {
+  public calcCurrent (settings: Settings, startTime: Date) {
     if (startTime == null) {
       startTime = new Date();
     }
-    if (this.annualWage == 0) {
-      this.annualWage = this.getWage();
-    }
-
-    this.perSecond = (this.annualWage / 220) / 8 / 3600;
+    this.perSecond = (settings.annualWage / 220) / settings.hoursPerDay / 3600;
 
     const now = new Date();
     const workingSeconds = (now.getTime() - startTime.getTime()) / 1000;
     this.current = workingSeconds * this.perSecond;
-    console.log('WageCalcService: this.annualWage= ' + this.annualWage + ', this.current = ' + this.current + ', workingSeconds=' + workingSeconds);
     return this.current;
   }
 
@@ -82,33 +65,6 @@ export class WageCalcService {
       // for DEV purpose only
       return true;
     }
-  }
-
-  public getWage() {
-    this.storage.get('annualWage').then((wage) => {
-      this.annualWage = parseFloat(wage);
-      console.log('WageCalcService: wage=' + wage);
-    });
-    return this.annualWage;
-  }
-
-  public getHoursPerDay() {
-    this.storage.get('hoursPerDay').then((hoursPerDay) => {
-      const _hoursPerDay = parseFloat(hoursPerDay);
-      console.log('WageCalcServce: hoursePerDay=' + hoursPerDay);
-      if (!isNaN(_hoursPerDay)) {
-        this.hoursPerDay = _hoursPerDay;
-      }
-    });
-    return this.hoursPerDay;
-  }
-
-  public getAnnualWagePromise(){
-    return this.storage.get('annualWage');
-  }
-
-  public getHoursPerDayPromise(){
-    return this.storage.get('annualWage');
   }
 
 }

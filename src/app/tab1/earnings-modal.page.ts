@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import {WageCalcService} from '../services/wage-calc.service';
+import { SettingsService } from '../services/settings.service';
+import { Settings } from '../models/settings';
 
 @Component({
   selector: 'app-earnings-modal',
@@ -12,6 +14,7 @@ export class EarningsModalPage implements OnInit {
 
   // "value" passed in componentProps
   @Input() contStartTime: Date;
+  settings: Settings;
   current: number;
   today: number;
   annualWage: number;
@@ -20,48 +23,34 @@ export class EarningsModalPage implements OnInit {
   constructor(public modalCtrl: ModalController,
     navParams: NavParams,
     private storage: Storage,
-    private wageCalcService: WageCalcService ) { }
+    private wageCalcService: WageCalcService,
+    private settingsSerivce: SettingsService ) { }
 
   ngOnInit() {
-  }
-
-  ionViewDidEnter() {
+    this.settings = this.settingsSerivce.getSettings();
     this.updateToday();
     this.startTime = this.contStartTime;
     this.updateCurrent();
+  }
+
+  ionViewDidEnter() {
+    
     }
 
   updateToday(){
-    this.storage.get('annualWage').then((wage) => {
-      const _wage = parseFloat(wage);
-      
-      if (typeof _wage === 'number' && !isNaN(_wage) ) {
-        this.annualWage = _wage;
-        // If wage-relevant settings changed, you must reset the current.
-        this.today = this.wageCalcService.calcToday(_wage);
-      } else {
-        console.log('Should never happen.');
-      }
+    this.today = this.wageCalcService.calcToday(this.settings);
 
-       const TIME_IN_MS = 1000;
+     const TIME_IN_MS = 1000;
       const hideFooterTimeout = setTimeout( () => {
         this.updateToday();
       },  TIME_IN_MS);
 
-    });
+    
   }
 
   updateCurrent(){
     this.storage.get('annualWage').then((wage) => {
-      const _wage = parseFloat(wage);
-      
-      if (typeof _wage === 'number' && !isNaN(_wage) ) {
-        this.annualWage = _wage;
-        // If wage-relevant settings changed, you must reset the current.
-        this.current = this.wageCalcService.calcCurrent(_wage, this.startTime);
-      } else {
-        console.log('Should never happen.');
-      }
+      this.current = this.wageCalcService.calcCurrent(this.settings, this.startTime);
 
       const TIME_IN_MS = 1000;
       const hideFooterTimeout = setTimeout( () => {

@@ -9,6 +9,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class SettingsService {
 
+  DEFAULT_HOURSPERDAY = 8;
+
   settings: Settings;
   annualWage: number;
   hoursePerDay: number;
@@ -17,14 +19,16 @@ export class SettingsService {
   constructor(private storage: Storage ) { }
 
   public saveSettings(annualWage: number, hoursPerDay: number) {
-
-    console.log('SettingsService::saveSettings: ' + annualWage + ' ' + hoursPerDay);
     this.settings = new Settings();
     this.settings.annualWage = annualWage;
-    this.settings.hoursPerDay = hoursPerDay;
-    
+    if (!hoursPerDay) {
+      this.settings.hoursPerDay = this.DEFAULT_HOURSPERDAY;
+    } else {
+      this.settings.hoursPerDay = hoursPerDay;
+    }
+
     localStorage.setItem('settings', JSON.stringify(this.settings));
-    
+
   }
 
   public getSettings(): Settings {
