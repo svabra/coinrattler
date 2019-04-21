@@ -45,11 +45,12 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     this.settings = this.settingsSerivce.getSettings();
 
-    if (!isNaN(this.settings.annualWage)) {
-      console.log('loading settings: ' + this.settings.annualWage);
+    if (this.settings.annualWage) {
       // If wage-relevant settings changed, you must reset the current.
       this.calcLiveEarnings();
       this.calcStatistics();
+    } else {
+      console.log('has no values in settings. ' + JSON.stringify(this.settings));
     }
   }
 
@@ -58,6 +59,9 @@ export class Tab1Page implements OnInit {
     if (!this.settings.annualWage){
       this.presentAlert();
       this.route.navigateByUrl('/tabs/tab2');
+    }else{
+      this.calcLiveEarnings();
+      this.calcStatistics();
     }
   }
 
@@ -99,9 +103,7 @@ export class Tab1Page implements OnInit {
       const hideFooterTimeout = setTimeout(() => {
         this.calcLiveEarnings();
       }, TIME_IN_MS);
-    } else {
-      console.log('It\'s passed 17:00. No one is working anymore.');
-    }
+    } 
   }
 
   calcStatistics() {
@@ -115,7 +117,7 @@ export class Tab1Page implements OnInit {
 
   isOfficeHours() {
     if (this.isDev) {
-      return false;
+      return true;
     } else {
       const now = new Date();
       // start of the working hours
@@ -124,10 +126,8 @@ export class Tab1Page implements OnInit {
 
       if (now >= start && now < endTime) {
         return true;
-      } else {
-        // return true;
-        // for DEV purpose only
-        return true;
+      } else {        
+        return false;
       }
     }
   }

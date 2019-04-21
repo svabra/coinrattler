@@ -12,19 +12,20 @@
       <!--<ion-img src="/assets/shapes.svg"></ion-img>-->
       <ion-card-header>
         <ion-card-subtitle>
-            Life is good! You're making some coins.
+            Life is good! You're making some coins. 
         </ion-card-subtitle>
         <ion-card-title>Live-Earnings</ion-card-title>
       </ion-card-header>
       <ion-card-content> 
         
-          <ng-template [ngIf]="!isOfficeHours" [ngIfElse]="workingHours">
+          <ng-template [ngIf]="!isOfficeHours()" [ngIfElse]="workingHours">
+           
               Regular workings hours are from eight to five. I suggest you stop being greedy for today.
               If you cannot, there are statistics about your hercules- further down the page. Provided that you supplied your annual . 
               Otherwise Live-Earnings will compute again at 08:00 in the morning.
             </ng-template>
-            <ng-template #workingHours>
 
+            <ng-template #workingHours>
                 <ion-list>
                     <ion-item>
                         <ion-label (click)=presentEarningsModal() [className]="'selectable'" title="Click to focus on daily coin rattling." mat-raised-button

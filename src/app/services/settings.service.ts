@@ -33,6 +33,7 @@ export class SettingsService {
 
   public getSettings(): Settings {
     const settings = JSON.parse(localStorage.getItem('settings'));
+    console.log('Parse settings object from local storage: ' + JSON.stringify(settings));
     return settings == null ? new Settings() : settings;
   }
 
