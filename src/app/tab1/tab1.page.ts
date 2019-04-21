@@ -54,7 +54,8 @@ export class Tab1Page implements OnInit {
   }
 
   ionViewDidEnter() {
-    if (isNaN(this.settings.annualWage)){
+    this.settings = this.settingsSerivce.getSettings();
+    if (!this.settings.annualWage){
       this.presentAlert();
       this.route.navigateByUrl('/tabs/tab2');
     }
