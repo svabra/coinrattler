@@ -13,9 +13,8 @@
       <ion-card-title>Your Gross Salary</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      
       <ion-item>
-        <ion-label position="floating">Annual Salary</ion-label>
+        <ion-label position="floating">Annual Wage or Bill</ion-label>
         <ion-input 
         [ngModel]="annualWage"  
         (ngModelChange)="annualWage=$event"
@@ -25,26 +24,13 @@
         autofocus="true"
         autocomplete="on"
         required="true"
-        (keydown)="saveAnnualWage($event)"
+        (keyup)="saveSettings($event)"
         (keydown.enter)="doBlur($event)"
         (keypress)="validateOnlyNumbers(this)"
         ng-enter="doBlur($event)"
         >
         </ion-input>
       </ion-item>
-
-      <ion-item>
-          <ion-label position="floating">Currency</ion-label>
-          <ion-select multiple="true" cancelText="Nah" okText="Okay!">
-              <ion-select-option value="CHF" selected>CHF</ion-select-option>
-              <!---
-              <ion-select-option value="EUR">EUR (most intervened ever)</ion-select-option>
-              <ion-select-option value="SEK">SEK (sexy but weak)</ion-select-option>
-              <ion-select-option value="USD">USD (federal debt relief instrument)</ion-select-option>
-
-              --->
-            </ion-select>         
-        </ion-item>
 
         <ion-item>
             <ion-label position="floating">Working Hours per Day</ion-label>
@@ -56,7 +42,7 @@
             inputmode="numeric"
             autocomplete="on"
             required="true"
-            (keydown)="saveHoursPerDay($event)"
+            (keyup)="saveSettings($event)"
             (keydown.enter)="doBlur($event)"
             (keypress)="validateOnlyNumbers(this)"
             ng-enter="doBlur($event)"

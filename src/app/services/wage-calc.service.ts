@@ -34,8 +34,8 @@ export class WageCalcService {
     this.perSecond = this.perMinute / 60;
   }
 
-  public calcToday (annualWage: number){
-    if(this.annualWage == 0){
+  public calcToday (annualWage: number) {
+    if (this.annualWage == 0) {
       this.annualWage = this.getWage();
     }
 
@@ -48,23 +48,24 @@ export class WageCalcService {
     const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0);
     const workingSeconds = (now.getTime() - start.getTime()) / 1000;
     this.today = workingSeconds * this.perSecond;
-    //console.log('WageCalcService: this.annualWage= '+ this.annualWage+', this.today = ' + this.today + ', workingSeconds=' + workingSeconds);
+    // console.log('WageCalcService: this.annualWage= '+ this.annualWage+', this.today = ' + this.today + ', workingSeconds=' + workingSeconds);
     return this.today;
   }
 
-  public calcCurrent (annualWage: number, startTime: Date){
-    if(startTime == null)
+  public calcCurrent (annualWage: number, startTime: Date) {
+    if (startTime == null) {
       startTime = new Date();
-    if(this.annualWage == 0){
+    }
+    if (this.annualWage == 0) {
       this.annualWage = this.getWage();
     }
 
     this.perSecond = (this.annualWage / 220) / 8 / 3600;
-    
+
     const now = new Date();
     const workingSeconds = (now.getTime() - startTime.getTime()) / 1000;
     this.current = workingSeconds * this.perSecond;
-    console.log('WageCalcService: this.annualWage= '+ this.annualWage+', this.current = ' + this.current + ', workingSeconds=' + workingSeconds);
+    console.log('WageCalcService: this.annualWage= ' + this.annualWage + ', this.current = ' + this.current + ', workingSeconds=' + workingSeconds);
     return this.current;
   }
 
@@ -74,7 +75,7 @@ export class WageCalcService {
     const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0);
     const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 0, 0, 0);
 
-    if (now >= start && now < endTime){
+    if (now >= start && now < endTime) {
       return true;
     } else {
       // return true;
@@ -83,22 +84,31 @@ export class WageCalcService {
     }
   }
 
-  public getWage(){
+  public getWage() {
     this.storage.get('annualWage').then((wage) => {
-      this.annualWage = parseFloat(wage);   
-      console.log('WageCalcService: wage=' + wage);   
+      this.annualWage = parseFloat(wage);
+      console.log('WageCalcService: wage=' + wage);
     });
     return this.annualWage;
   }
 
-  public getHoursPerDay(){
+  public getHoursPerDay() {
     this.storage.get('hoursPerDay').then((hoursPerDay) => {
       const _hoursPerDay = parseFloat(hoursPerDay);
+      console.log('WageCalcServce: hoursePerDay=' + hoursPerDay);
       if (!isNaN(_hoursPerDay)) {
         this.hoursPerDay = _hoursPerDay;
       }
     });
     return this.hoursPerDay;
+  }
+
+  public getAnnualWagePromise(){
+    return this.storage.get('annualWage');
+  }
+
+  public getHoursPerDayPromise(){
+    return this.storage.get('annualWage');
   }
 
 }
